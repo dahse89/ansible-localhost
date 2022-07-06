@@ -1,0 +1,11 @@
+- name: Add insomnia repo
+  apt_repository:
+    repo: 'deb [trusted=yes arch=amd64] https://download.konghq.com/insomnia-ubuntu/ default all'
+    state: present
+
+- name: Install insomnia
+  apt:
+    pkg:
+      - insomnia
+    state: present
+    update_cache: true

@@ -1,0 +1,15 @@
+- name: Install utilities
+  apt:
+    pkg:
+      - git
+      - git-flow
+      - pv
+      - wget
+      - nmap
+      - zsh
+      - jq
+      - xclip
+      - unzip
+      - tree
+      - ncdu
+    state: present

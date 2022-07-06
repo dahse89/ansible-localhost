@@ -1,0 +1,10 @@
+- name: Install essential dependencies
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg-agent
+      - software-properties-common
+      - sudo
+    state: present
+    update_cache: true

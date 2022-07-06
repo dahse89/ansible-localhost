@@ -1,0 +1,11 @@
+ - name: "My setup debian based systems"
+   hosts: localhost
+   connection: localhost
+   become: true
+   roles:
+     - { role: essential-deps, tags: ['e-deps'] }
+     - { role: cli-tools, tags: ['cli'] }
+     - { role: cli-fun, tags: ['cli-fun'] }
+     - { role: simple-apps, tags: ['apps'] }
+     - { role: insomnia, tags: ['insomnia'] }
+     - { role: oh-my-zsh, tags: ['omz'] }

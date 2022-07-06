@@ -1,0 +1,8 @@
+- name: Install utilities
+  apt:
+    pkg:
+      - terminator
+      - vagrant
+      - notable
+      - nfs-kernel-server
+    state: present
