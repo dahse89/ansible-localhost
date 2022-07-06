@@ -9,4 +9,4 @@
     copy:
       src: files/config
       dest: "{{ lookup('env', 'HOME') }}/.config/terminator/config"
-become_user: pdahse
+  become_user: pdahse
