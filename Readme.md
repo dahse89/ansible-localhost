@@ -3,9 +3,10 @@
 - dieses Setup funktioniert nur für Debian bases Systeme
 - python3 und ansible müssen installiert sein
   ```
-  sudo apt install python3 python-is-python3
+  sudo apt install python3 python-is-python3 ansible
   ```
-- es muss ein User `pdahse` existieren
+- es muss ein User `pdahse` existieren 
+- user muss sudo ohne pw haben
 
 ## Ungereimtheiten
 ### oh-my-zsh

@@ -12,4 +12,5 @@
       - unzip
       - tree
       - ncdu
+      - micro
     state: present
