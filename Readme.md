@@ -14,3 +14,6 @@ Aktuell muss man hier die default shell manuell hinzufügen
 chsh -s $(which zsh)
 ```
 Hier muss das PW eingegeben werden, welches sich ja unterscheiden kann, deshalb erstmal übersprungen
+
+### Notable
+not apt use deb pkg etc

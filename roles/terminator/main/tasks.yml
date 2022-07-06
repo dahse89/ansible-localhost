@@ -1,0 +1,12 @@
+- block:
+  - name: Install terminator
+    apt:
+      pkg:
+        - terminator
+      state: present
+
+  - name: Copy terminator config
+    copy:
+      src: files/config
+      dest: "{{ lookup('env', 'HOME') }}/.config/terminator/config"
+become_user: pdahse
