@@ -8,6 +8,7 @@
     font = MesloLGS NF 10
     show_titlebar = False
     scrollbar_position = hidden
+    use_system_font = False
 scrollback_infinite = True
 [layouts]
   [[default]]

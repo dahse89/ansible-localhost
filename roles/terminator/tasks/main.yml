@@ -4,6 +4,12 @@
       - terminator
     state: present
 
+- name: Ensure termintor config directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.config/terminator"
+    state: directory
+  become_user: pdahse
+
 - name: Copy terminator config
   copy:
     src: files/config
