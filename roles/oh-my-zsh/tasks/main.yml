@@ -70,4 +70,23 @@
           # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
           [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       when: powerlevel10k.stat.exists == false
+
+    - name: copy .zsh_aliases to home
+      copy:
+        src: 'files/.zsh_aliases'
+        dest: "{{ lookup('env', 'HOME') }}/.zsh_aliases"
+
+    - name: Check if .zsh_aliases is sourced in .zshrc
+      lineinfile:
+        line: '[[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases'
+        path: "{{ lookup('env', 'HOME') }}/.zshrc"
+      check_mode: true
+      register: zsh_aliases_sourced
+
+    - name: Source zsh_aliases
+      lineinfile:
+        path: "{{ lookup('env', 'HOME') }}/.zshrc"
+        insertafter: EOF
+        line: '[[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases'
+      when: zsh_aliases_sourced.changed
   become_user: pdahse

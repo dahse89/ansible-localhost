@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# general
+alias c="clear"
+alias cdtmp="cd $(mktemp -d)"
+alias nemotmp="nemo $(mktemp -d) &"
+alias empty="rm -rf *;rm -rf .*"
+alias dc='docker-compose'
+alias v='vagrant'
+alias kubectl="minikube kubectl --"
+alias copy="xclip -selection clipboard"
+alias paste="xclip -o -selection clipboard"
+
+# check24
+build() {
+  BEAUTY_SCRIPTS="$HOME/Dev/beauty-environment/bin/deployment/local"
+  composer install --no-scripts;
+  
+  if [[ $(pwd -P | grep projects/beauty-octopus-websocket) ]]; then
+    $BEAUTY_SCRIPTS/deploy-bow.sh "$@"
+  elif [[ $(pwd -P | grep projects/beauty-octopus) ]]; then
+     $BEAUTY_SCRIPTS/deploy-oct.sh "$@"
+  elif [[ $(pwd -P | grep projects/beauty-medibell) ]]; then
+    $BEAUTY_SCRIPTS/deploy-med.sh "$@"
+  elif [[ $(pwd -P | grep projects/beauty-wordpress) ]]; then
+    $BEAUTY_SCRIPTS/deploy-wp.sh "$@"
+  elif [[ $(pwd -P | grep projects/beauty-core) ]]; then
+    $BEAUTY_SCRIPTS/deploy-api.sh "$@"
+  elif [[ $(pwd -P | grep projects/beauty) ]]; then
+    $BEAUTY_SCRIPTS/deploy-bcp.sh "$@"
+  elif [[ $(pwd -P | grep augenlasern/augenlaser) ]]; then
+    vagrant ssh -c "/vagrant/augenlaser/scripts/vagrant-deploy.sh" "$@"
+  elif [[ $(pwd -P | grep augenlasern/alv-octopus) ]]; then
+    vagrant ssh -c "/vagrant/alv-octopus/scripts/vagrant-deploy.sh" "$@"
+  elif [[ $(pwd -P | grep augenlasern/alv-cdn) ]]; then
+    vagrant ssh -c "/vagrant/alv-cdn/scripts/vagrant-deploy.sh" "$@"
+  elif [[ $(pwd -P | grep augenlasern/c24-wordpress) ]]; then
+    vagrant ssh -c "/vagrant/c24-wordpress/scripts/vagrant-deploy.sh" "$@"
+  else
+    printf '%s\n' "Current directory is not supported" >&2
+    exit 1
+  fi
+}
+
+gbuild() {
+	gfa; gco $1; gl; sleep 2; build
+}
+
+alias vssh='
+pwd -P | grep projects/beauty-octopus > /dev/null \
+&& vagrant ssh -c "cd /var/www/oct.beauty.dev/public_html/beauty-octopus && bash" \
+|| (pwd -P | grep projects/beauty-medibell > /dev/null \
+    && vagrant ssh -c "cd /var/www/med.beauty.dev/public_html/medibell && bash" \
+    || (pwd -P | grep projects/beauty-medilove > /dev/null \
+       && vagrant ssh -c "cd /var/www/mdl.beauty.dev/public_html/medilove && bash" \
+       || (pwd -P | grep projects/beauty-wordpress > /dev/null \
+           && vagrant ssh -c "cd /var/www/wp.beauty.dev/public_html/beauty-wordpress/ratgeber && bash" \
+           || (pwd -P | grep projects/beauty-core > /dev/null \
+               && vagrant ssh -c "cd /var/www/api.beauty.dev/public_html/beauty-core && bash" \
+               || (pwd -P | grep projects/beauty > /dev/null \
+                    && vagrant ssh -c "cd /var/www/beauty.dev/public_html/beauty && bash" \
+                    || (pwd -P | grep augenlasern/augenlaser > /dev/null \
+                        && vagrant ssh -c "cd /vagrant/augenlaser && bash" \
+                        || (pwd -P | grep augenlasern/alv-octopus > /dev/null \
+                            && vagrant ssh -c "cd /vagrant/alv-octopus && bash" \
+                            || (pwd -P | grep augenlasern/alv-cdn > /dev/null \
+                                && vagrant ssh -c "cd /vagrant/alv-cdn && bash" \
+                                || (pwd -P | grep augenlasern/c24-wordpress > /dev/null \
+                                    && vagrant ssh -c "cd /vagrant/c24-wordpress && bash" \
+                                    || vagrant ssh)))))))))'
+
+
+
+# git
+alias gbc='echo -n $(git rev-parse --abbrev-ref HEAD) | copy'
+alias gts='git describe --tags `git rev-list --tags --max-count=1`'
+alias gtc='echo -n $(gts) | copy'
+alias glsm='git pull; git submodule foreach git pull origin master'
+alias gan='git add $(git ls-files -o --exclude-standard)'
+gcof() {
+    git checkout "feature/$1"
+}
+gcoa() {                                                                                                                                                                                                                                                             
+    git checkout "feature/AEAL-$1"                                                                                                                                                                                                                                        
+}
+gcob() {                                                                                                                                                                                                                                                             
+    git checkout "feature/AEBE-$1"                                                                                                                                                                                                                                        
+} 
+gflfsa() {
+	gflfs "AEALbin/bash-$1"
+}
+gflfsb() {
+	gflfs "AEBE-$1"
+}
+gfc() {
+    git commit -m "["$(git rev-parse --abbrev-ref HEAD | rev | cut -d'/' -f1 | rev)"] $1"
+}
+stash() {
+    git stash push -m "zsh_stash_name_$1"
+}
+
+stashapply() {
+    git stash apply $(git stash list | grep "zsh_stash_name_$1" | cut -d: -f1)
+}
