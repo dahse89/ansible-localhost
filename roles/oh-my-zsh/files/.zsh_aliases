@@ -46,31 +46,6 @@ gbuild() {
 	gfa; gco $1; gl; sleep 2; build
 }
 
-alias vssh='
-pwd -P | grep projects/beauty-octopus > /dev/null \
-&& vagrant ssh -c "cd /var/www/oct.beauty.dev/public_html/beauty-octopus && bash" \
-|| (pwd -P | grep projects/beauty-medibell > /dev/null \
-    && vagrant ssh -c "cd /var/www/med.beauty.dev/public_html/medibell && bash" \
-    || (pwd -P | grep projects/beauty-medilove > /dev/null \
-       && vagrant ssh -c "cd /var/www/mdl.beauty.dev/public_html/medilove && bash" \
-       || (pwd -P | grep projects/beauty-wordpress > /dev/null \
-           && vagrant ssh -c "cd /var/www/wp.beauty.dev/public_html/beauty-wordpress/ratgeber && bash" \
-           || (pwd -P | grep projects/beauty-core > /dev/null \
-               && vagrant ssh -c "cd /var/www/api.beauty.dev/public_html/beauty-core && bash" \
-               || (pwd -P | grep projects/beauty > /dev/null \
-                    && vagrant ssh -c "cd /var/www/beauty.dev/public_html/beauty && bash" \
-                    || (pwd -P | grep augenlasern/augenlaser > /dev/null \
-                        && vagrant ssh -c "cd /vagrant/augenlaser && bash" \
-                        || (pwd -P | grep augenlasern/alv-octopus > /dev/null \
-                            && vagrant ssh -c "cd /vagrant/alv-octopus && bash" \
-                            || (pwd -P | grep augenlasern/alv-cdn > /dev/null \
-                                && vagrant ssh -c "cd /vagrant/alv-cdn && bash" \
-                                || (pwd -P | grep augenlasern/c24-wordpress > /dev/null \
-                                    && vagrant ssh -c "cd /vagrant/c24-wordpress && bash" \
-                                    || vagrant ssh)))))))))'
-
-
-
 # git
 alias gbc='echo -n $(git rev-parse --abbrev-ref HEAD) | copy'
 alias gts='git describe --tags `git rev-list --tags --max-count=1`'
@@ -98,7 +73,11 @@ gfc() {
 stash() {
     git stash push -m "zsh_stash_name_$1"
 }
-
 stashapply() {
     git stash apply $(git stash list | grep "zsh_stash_name_$1" | cut -d: -f1)
+}
+
+# ansible
+v-ansible-playbook() {
+    ansible-playbook playbook.yml -i inventory --vault-password-file=../vaultpass $1 --extra-vars="ansible_ssh_private_key_file=../.vagrant/machines/bop.beauty.dev/virtualbox/private_key"
 }
