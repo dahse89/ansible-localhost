@@ -47,7 +47,6 @@
       copy:
         src: 'files/.p10k.zsh'
         dest: "{{ lookup('env', 'HOME') }}/.p10k.zsh"
-      when: powerlevel10k.stat.exists == false
 
     - name: Enable Powerlevel10k instant prompt
       lineinfile:
