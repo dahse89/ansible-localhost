@@ -10,3 +10,4 @@
      - { role: oh-my-zsh, tags: ['omz'] }
      - { role: insomnia, tags: ['insomnia'] }
      - { role: cli-fun, tags: ['cli-fun'] }
+     - { role: unetbootin, tags: ['unetbootin'] }
