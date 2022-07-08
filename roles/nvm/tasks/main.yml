@@ -1,0 +1,13 @@
+- block:
+  - name: Check if nvm is loaded
+    lineinfile:
+      line: 'export NVM_DIR="$HOME/.nvm"'
+      path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    check_mode: true
+    register: nvm_loaded
+
+  - name: Install install nvm
+    shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    when: nvm_loaded.changed
+  become_user: pdahse
+
