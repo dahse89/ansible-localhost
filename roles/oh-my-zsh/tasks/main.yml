@@ -75,17 +75,25 @@
         src: 'files/.zsh_aliases'
         dest: "{{ lookup('env', 'HOME') }}/.zsh_aliases"
 
+
+
     - name: Check if .zsh_aliases is sourced in .zshrc
       lineinfile:
         line: '[[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases'
         path: "{{ lookup('env', 'HOME') }}/.zshrc"
       check_mode: true
       register: zsh_aliases_sourced
-
     - name: Source zsh_aliases
       lineinfile:
         path: "{{ lookup('env', 'HOME') }}/.zshrc"
         insertafter: EOF
         line: '[[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases'
       when: zsh_aliases_sourced.changed
+
+    - name: Add zsh plugins
+      lineinfile:
+        path: "{{ lookup('env', 'HOME') }}/.zshrc"
+        regexp: '^plugins='
+        line: 'plugins=(git git-flow)'
+
   become_user: pdahse
