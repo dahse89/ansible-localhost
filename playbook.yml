@@ -12,3 +12,4 @@
      - { role: cli-fun, tags: ['cli-fun'] }
      - { role: unetbootin, tags: ['unetbootin'] }
      - { role: nvm, tags: ['nvm'] }
+     - { role: rclone, tags: ['rclone'] }
