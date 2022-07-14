@@ -1,0 +1,11 @@
+- name: Add ...
+  apt_repository:
+    repo: ''
+    state: present
+
+- name: Install ...
+  apt:
+    pkg:
+      - ...
+    state: present
+    update_cache: true
