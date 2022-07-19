@@ -3,4 +3,5 @@
     pkg:
       - vagrant
       - nfs-kernel-server
+      - net-tools
     state: present
