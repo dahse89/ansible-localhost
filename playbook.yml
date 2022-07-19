@@ -2,6 +2,10 @@
    hosts: localhost
    connection: localhost
    become: true
+
+   vars:
+     php_version: 8.1 # use --tags=php-version
+
    roles:
      - { role: essential-deps, tags: ['e-deps'] }
      - { role: cli-tools, tags: ['cli'] }
@@ -13,3 +17,4 @@
      - { role: unetbootin, tags: ['unetbootin'] }
      - { role: nvm, tags: ['nvm'] }
      - { role: rclone, tags: ['rclone'] }
+     - { role: php, tags: ['php'] }
