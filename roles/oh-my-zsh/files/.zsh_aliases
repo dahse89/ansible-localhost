@@ -36,6 +36,8 @@ build() {
     vagrant ssh -c "/vagrant/alv-cdn/scripts/vagrant-deploy.sh" "$@"
   elif [[ $(pwd -P | grep augenlasern/c24-wordpress) ]]; then
     vagrant ssh -c "/vagrant/c24-wordpress/scripts/vagrant-deploy.sh" "$@"
+  elif [[ $(pwd -P | grep augenlasern/alv-wordpress) ]]; then
+      vagrant ssh -c "/vagrant/alv-wordpress/scripts/vagrant-deploy.sh" "$@"
   else
     printf '%s\n' "Current directory is not supported" >&2
     exit 1
