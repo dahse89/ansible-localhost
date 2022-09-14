@@ -4,7 +4,7 @@
    become: true
 
    vars:
-     php_version: 8.1 # use --tags=php-version
+     php_version: 7.4 # use --tags=php-version
 
    roles:
      - { role: essential-deps, tags: ['e-deps'] }
@@ -18,3 +18,4 @@
      - { role: nvm, tags: ['nvm'] }
      - { role: rclone, tags: ['rclone'] }
      - { role: php, tags: ['php'] }
+     - { role: psysh, tags: ['psysh'] }
