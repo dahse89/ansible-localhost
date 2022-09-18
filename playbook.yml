@@ -11,7 +11,8 @@
      - { role: simple-apps, tags: ['apps'] }
      - { role: terminator, tags: ['terminator'] }
      - { role: oh-my-zsh, tags: ['omz'] }
-#     - { role: virtualbox, tags: ['vbox'] }
+     - { role: signal-desktop, tags: ['signal'] }
+     - { role: virtualbox, tags: ['vbox'] }
 #     - { role: vagrant, tags: ['vagrant'] }
 #     - { role: insomnia, tags: ['insomnia'] }
 #     - { role: cli-fun, tags: ['cli-fun'] }

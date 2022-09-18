@@ -1,0 +1,46 @@
+- name: check if virtual box repository exists
+  stat:
+    path: /etc/yum.repos.d/virtualbox.repo
+  register: virtualbox_repo_file
+
+- name: download virtual box repository
+  get_url:
+    url: "http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo"
+    dest: /etc/yum.repos.d/virtualbox.repo
+  when: virtualbox_repo_file.stat.exists == False
+
+- shell: uname -r
+  register: uname_r
+
+- name: Install virtual box dependencies
+  dnf:
+    name:
+      - gcc
+      - binutils
+      - make
+      - glibc-devel
+      - patch
+      - libgomp
+      - glibc-headers
+      - kernel-headers
+      - "kernel-devel-{{ uname_r.stdout }}"
+      - dkms
+    state: present
+
+- name: Install virtual box
+  dnf:
+    name: VirtualBox-6.1
+    state: present
+
+- name: Adding the user to vboxusers group
+  user:
+    name: pdahse # todo use a variable here
+    groups: vboxusers
+    append: yes
+
+- name: Configure virtualbox drivers
+  shell: /usr/lib/virtualbox/vboxdrv.sh setup
+  register: vboxdrv
+
+- debug: var=vboxdrv.stdout
+
