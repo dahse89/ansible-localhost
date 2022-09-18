@@ -7,15 +7,16 @@
      php_version: 7.4 # use --tags=php-version
 
    roles:
-     - { role: essential-deps, tags: ['e-deps'] }
      - { role: cli-tools, tags: ['cli'] }
      - { role: simple-apps, tags: ['apps'] }
      - { role: terminator, tags: ['terminator'] }
      - { role: oh-my-zsh, tags: ['omz'] }
-     - { role: insomnia, tags: ['insomnia'] }
-     - { role: cli-fun, tags: ['cli-fun'] }
-     - { role: unetbootin, tags: ['unetbootin'] }
-     - { role: nvm, tags: ['nvm'] }
-     - { role: rclone, tags: ['rclone'] }
-     - { role: php, tags: ['php'] }
-     - { role: psysh, tags: ['psysh'] }
+#     - { role: virtualbox, tags: ['vbox'] }
+#     - { role: vagrant, tags: ['vagrant'] }
+#     - { role: insomnia, tags: ['insomnia'] }
+#     - { role: cli-fun, tags: ['cli-fun'] }
+#     - { role: unetbootin, tags: ['unetbootin'] }
+#     - { role: nvm, tags: ['nvm'] }
+#     - { role: rclone, tags: ['rclone'] }
+#     - { role: php, tags: ['php'] }
+#     - { role: psysh, tags: ['psysh'] }

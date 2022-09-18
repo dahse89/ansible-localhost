@@ -1,7 +1,6 @@
 - name: Install terminator
-  apt:
-    pkg:
-      - terminator
+  dnf:
+    name: terminator
     state: present
 
 - name: Ensure termintor config directory

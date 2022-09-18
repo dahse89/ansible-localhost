@@ -1,7 +1,5 @@
 - name: Install utilities
-  apt:
-    pkg:
-      - vagrant
-      - nfs-kernel-server
-      - net-tools
+  dnf:
+    name:
+      - alacarte
     state: present
