@@ -1,0 +1,4 @@
+- name: Install vagrant
+  dnf:
+    name: vagrant
+    state: present
