@@ -1,0 +1,4 @@
+- name: Install slack desktop
+  flatpak:
+    name:  com.slack.Slack
+    state: present
