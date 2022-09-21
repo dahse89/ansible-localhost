@@ -15,9 +15,12 @@
      - { role: virtualbox, tags: ['vbox'] }
      - { role: vagrant, tags: ['vagrant'] }
      - { role: nvm, tags: ['nvm'] }
+     - { role: docker, tags: ['docker'] }
      - { role: docker-compose, tags: ['dc'] }
      - { role: slack, tags: ['slack'] }
      - { role: flameshot, tags: ['flameshot'] }
+     - { role: keepass, tags: ['flameshot'] }
+
 #     - { role: insomnia, tags: ['insomnia'] }
 #     - { role: cli-fun, tags: ['cli-fun'] }
 #     - { role: unetbootin, tags: ['unetbootin'] }
