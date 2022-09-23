@@ -1,0 +1,6 @@
+- name: Install git-flow
+  yum:
+    name:
+      - gitflow
+    state: present
+    update_cache: true

@@ -1,0 +1,5 @@
+- name: Install BpyTop – Resource Monitoring Tool for Linux
+  pip:
+    name:
+      - bpytop
+    state: present

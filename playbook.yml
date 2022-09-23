@@ -19,7 +19,9 @@
      - { role: docker-compose, tags: ['dc'] }
      - { role: slack, tags: ['slack'] }
      - { role: flameshot, tags: ['flameshot'] }
-     - { role: keepass, tags: ['flameshot'] }
+     - { role: keepass, tags: ['keepass'] }
+     - { role: git-flow, tags: ['git-flow'] }
+     - { role: bpytop, tags: ['bpytop'] }
 
 #     - { role: insomnia, tags: ['insomnia'] }
 #     - { role: cli-fun, tags: ['cli-fun'] }
