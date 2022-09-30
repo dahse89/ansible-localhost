@@ -2,10 +2,6 @@
    hosts: localhost
    connection: localhost
    become: true
-
-   vars:
-     php_version: 7.4 # use --tags=php-version
-
    roles:
      - { role: cli-tools, tags: ['cli'] }
      - { role: simple-apps, tags: ['apps'] }
