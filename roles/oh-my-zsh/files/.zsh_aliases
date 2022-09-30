@@ -69,9 +69,10 @@ gflfsa() {
 gflfsb() {
 	gflfs "AEBE-$1"
 }
-gfc() {
-    git commit -m "["$(git rev-parse --abbrev-ref HEAD | rev | cut -d'/' -f1 | rev)"] $1"
-}
+alias gfc='git commit-flow'
+#gfc() {
+#    git commit -m "["$(git rev-parse --abbrev-ref HEAD | rev | cut -d'/' -f1 | rev)"] $1"
+#}
 stash() {
     git stash push -m "zsh_stash_name_$1"
 }

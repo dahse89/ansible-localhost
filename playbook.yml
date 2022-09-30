@@ -18,6 +18,7 @@
      - { role: keepass, tags: ['keepass'] }
      - { role: git-flow, tags: ['git-flow'] }
      - { role: bpytop, tags: ['bpytop'] }
+     - { role: git-alias, tags: ['git-alias'] }
 
 #     - { role: insomnia, tags: ['insomnia'] }
 #     - { role: cli-fun, tags: ['cli-fun'] }

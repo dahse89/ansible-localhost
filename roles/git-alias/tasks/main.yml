@@ -1,0 +1,24 @@
+- name: Adding charm.repo
+  copy:
+    dest: "/etc/yum.repos.d/charm.repo"
+    content: |
+      [charm]
+      name=Charm
+      baseurl=https://repo.charm.sh/yum/
+      enabled=1
+      gpgcheck=0
+
+- name: Install gum
+  yum:
+    name:
+      - gum
+    state: present
+    update_cache: true
+
+- name: Add git commit-flow
+  copy:
+    src: 'files/git-commit-flow.sh'
+    dest: "/usr/local/bin/git-commit-flow"
+    owner: root
+    group: root
+    mode: 0755
