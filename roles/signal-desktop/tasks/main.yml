@@ -1,4 +1,0 @@
-- name: Install signal desktop
-  flatpak:
-    name:  org.signal.Signal
-    state: present

@@ -1,5 +1,0 @@
-- name: Install utilities
-  dnf:
-    name:
-      - alacarte
-    state: present

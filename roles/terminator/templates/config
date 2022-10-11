@@ -1,0 +1,21 @@
+[global_config]
+[keybindings]
+[profiles]
+  [[default]]
+    background_darkness = 0.86
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = {{ font }} 10
+    show_titlebar = False
+    scrollbar_position = hidden
+    use_system_font = False
+scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+        parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]

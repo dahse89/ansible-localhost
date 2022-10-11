@@ -13,9 +13,8 @@ alias paste="xclip -o -selection clipboard"
 
 # check24
 build() {
-  BEAUTY_SCRIPTS="$HOME/Dev/beauty-environment/bin/deployment/local"
-  composer install --no-scripts;
-  
+  BEAUTY_SCRIPTS="$HOME/dev/beauty-environment/bin/deployment/local"
+
   if [[ $(pwd -P | grep projects/beauty-octopus-websocket) ]]; then
     $BEAUTY_SCRIPTS/deploy-bow.sh "$@"
   elif [[ $(pwd -P | grep projects/beauty-octopus) ]]; then
@@ -84,3 +83,13 @@ stashapply() {
 v-ansible-playbook() {
     ansible-playbook $1 --extra-vars="ansible_ssh_private_key_file=../.vagrant/machines/bop.beauty.dev/virtualbox/private_key"
 }
+
+socket-please() {
+  (cd /home/pdahse/dev/beauty-environment/projects/beauty-octopus-websocket && build)
+}
+
+# lsd
+alias ls='lsd'
+alias l='ls -al'
+alias lt='ls --tree'
+

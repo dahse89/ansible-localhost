@@ -1,5 +1,0 @@
-- name: Install psysh (better interactive php shell for testing)
-  get_url:
-    url: 'https://psysh.org/psysh'
-    dest: /usr/local/bin/psysh
-    mode: '0755'

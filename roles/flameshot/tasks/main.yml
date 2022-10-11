@@ -1,6 +1,0 @@
-- name: Install flameshot
-  dnf:
-    name:
-      - flameshot
-    state: present
-    update_cache: true

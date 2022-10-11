@@ -1,8 +1,0 @@
-- name: check if rclone using 'which rclone' return code
-  shell: which rclone
-  register: which_rclone
-  ignore_errors: yes
-
-- name: Install rClone
-  shell: curl https://rclone.org/install.sh | bash
-  when: which_rclone.rc == 1

@@ -1,6 +1,0 @@
-- name: Install docker compose
-  dnf:
-    name:
-      - docker-compose
-    state: present
-    update_cache: true

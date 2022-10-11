@@ -1,6 +1,0 @@
-- name: Install utilities
-  apt:
-    pkg:
-      - lolcat
-      - neofetch
-    state: present

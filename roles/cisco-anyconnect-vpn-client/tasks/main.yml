@@ -1,0 +1,21 @@
+- name: Check if anyconnect is already installed
+  stat:
+    path: /opt/cisco/anyconnect/bin/vpn
+  register: anyconnect_bin
+
+- name: Download anyconnect build
+  unarchive:
+    src: https://ftp.uni-weimar.de/anyconnect-linux64-4.10.01075-predeploy-k9.tar.gz
+    dest: /tmp
+    remote_src: yes
+  when: not anyconnect_bin.stat.exists
+
+- name: Install anyconnect
+  expect:
+    echo: yes
+    command: ./vpn_install.sh
+    chdir: /tmp/anyconnect-linux64-4.10.01075/vpn
+    responses:
+      (.*)license agreement(.*): "y"
+    timeout: 30
+  when: not anyconnect_bin.stat.exists

@@ -1,0 +1,9 @@
+- name: Install all packages where only flatpak install in needed
+  flatpak:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - org.keepassxc.KeePassXC                 # old school Password manager for work
+    - com.jetbrains.PhpStorm                  # IDE
+    - org.signal.Signal                       # Messenger
+    - com.slack.Slack                         # Chat

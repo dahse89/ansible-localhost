@@ -1,4 +1,4 @@
-- block:
+- block: # todo pdahse last time this was not installed because the dot files where copied before
   - name: Check if nvm is loaded
     lineinfile:
       line: 'export NVM_DIR="$HOME/.nvm"'
@@ -11,3 +11,9 @@
     when: nvm_loaded.changed
   become_user: pdahse
 
+# todo
+# also this part needed to be moved to the top manuelly
+# -------------------------------------
+#  export NVM_DIR="$HOME/.nvm"
+#  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

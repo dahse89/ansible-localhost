@@ -1,0 +1,5 @@
+- name: Install all packages where only pip install in needed
+  pip:
+    name:
+      - bpytop
+    state: present

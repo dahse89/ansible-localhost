@@ -1,0 +1,16 @@
+- name: Check if git flow is available
+  shell: git flow version
+  register: git_flow
+  ignore_errors: yes
+
+- name: Download git-flow-avh installer
+  get_url:
+    url: https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
+    dest: /tmp
+  when: git_flow.failed
+
+- name: Run git-flow-avh installer
+  shell:
+    chdir: /tmp
+    cmd: bash gitflow-installer.sh install develop
+  when: git_flow.failed

@@ -1,29 +1,20 @@
- - name: "My setup for fedora 36"
+ - name: "My setup for fedora 37"
    hosts: localhost
    connection: localhost
    become: true
+   vars:
+     user: pdahse
+     font: "Hack Nerd Font Mono Regular" # todo currently installed in oh-my-zsh role -> should be separated
    roles:
-     - { role: cli-tools, tags: ['cli'] }
-     - { role: simple-apps, tags: ['apps'] }
+     - { role: pkgs-dnf, tags: ['dnf'] }
+     - { role: pkgs-flatpak, tags: ['flatpak'] }
+     - { role: pkgs-pip, tags: ['pip'] }
+     - { role: cisco-anyconnect-vpn-client, tags: ['anyconnect'] }
      - { role: terminator, tags: ['terminator'] }
      - { role: oh-my-zsh, tags: ['omz'] }
-     - { role: signal-desktop, tags: ['signal'] }
      - { role: virtualbox, tags: ['vbox'] }
      - { role: vagrant, tags: ['vagrant'] }
      - { role: nvm, tags: ['nvm'] }
-     - { role: docker, tags: ['docker'] }
-     - { role: docker-compose, tags: ['dc'] }
-     - { role: slack, tags: ['slack'] }
-     - { role: flameshot, tags: ['flameshot'] }
-     - { role: keepass, tags: ['keepass'] }
-     - { role: git-flow, tags: ['git-flow'] }
-     - { role: bpytop, tags: ['bpytop'] }
-     - { role: git-alias, tags: ['git-alias'] }
-
-#     - { role: insomnia, tags: ['insomnia'] }
-#     - { role: cli-fun, tags: ['cli-fun'] }
-#     - { role: unetbootin, tags: ['unetbootin'] }
-
-#     - { role: rclone, tags: ['rclone'] }
-#     - { role: php, tags: ['php'] }
-#     - { role: psysh, tags: ['psysh'] }
+     - { role: git-flow-avh, tags: ['git-flow'] }
+     - { role: git-commit-flow, tags: ['git-commit-flow'] }
+#     - { role: insomnia, tags: ['insomnia'] } # todo pdahse not working corrently with ansible / manually works

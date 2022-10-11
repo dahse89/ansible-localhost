@@ -1,4 +1,0 @@
-- name: Install KeePassXC
-  flatpak:
-    name:  org.keepassxc.KeePassXC
-    state: present

@@ -1,11 +1,10 @@
-- name: Add insomnia repo
-  apt_repository:
-    repo: 'deb [trusted=yes arch=amd64] https://download.konghq.com/insomnia-ubuntu/ default all'
-    state: present
+- name: Download insomnia rpm package
+  get_url:
+    url: "https://github.com/Kong/insomnia/releases/download/core%402022.6.0/Insomnia.Core-2022.6.0.rpm"
+    dest: /tmp/insomnia.rpm
+  #when: docker_repo_file.stat.exists == False
 
-- name: Install insomnia
-  apt:
-    pkg:
-      - insomnia
+- name: Install insomnia package.
+  dnf:
+    name: /tmp/insomnia.rpm
     state: present
-    update_cache: true

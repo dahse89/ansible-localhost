@@ -10,7 +10,7 @@
   become_user: pdahse
 
 - name: Copy terminator config
-  copy:
-    src: files/config
+  template:
+    src: templates/config
     dest: "{{ lookup('env', 'HOME') }}/.config/terminator/config"
   become_user: pdahse
