@@ -3,7 +3,6 @@
    connection: localhost
    become: true
    vars:
-     user: pdahse
      font: "Hack Nerd Font Mono Regular" # todo currently installed in oh-my-zsh role -> should be separated
    roles:
      - { role: pkgs-dnf, tags: ['dnf'] }

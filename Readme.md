@@ -1,20 +1,16 @@
-# Ansible für meinen Host
-## Vorraussetzungen
-- dieses Setup funktioniert nur für Debian bases Systeme
-- python3 und ansible müssen installiert sein
-  ```
-  sudo apt install python3 python-is-python3 ansible
-  ```
-- es muss ein User `pdahse` existieren 
-- user muss sudo ohne pw haben
+# My ansible host setup 
 
-## Ungereimtheiten
+## Requirements
+- The `main` branch is currenly for Fedora
+- `python` und `ansible` must be installed
+  ```
+  python -m pip install --user ansible==2.9.27
+  ```
+- There must be a user `pdahse` having sudo without password privileges
+
+## Manually Setups
 ### oh-my-zsh
-Aktuell muss man hier die default shell manuell hinzufügen
+You need to make zsh as the default shell by your own
 ```
 chsh -s $(which zsh)
 ```
-Hier muss das PW eingegeben werden, welches sich ja unterscheiden kann, deshalb erstmal übersprungen
-
-### Notable
-not apt use deb pkg etc

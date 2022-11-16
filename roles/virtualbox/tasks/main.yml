@@ -26,6 +26,6 @@
 
 - name: Adding the user to vboxusers group
   user:
-    name: pdahse # todo use a variable here
+    name: pdahse
     groups: vboxusers
     append: yes
