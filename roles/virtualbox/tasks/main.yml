@@ -29,3 +29,8 @@
     name: pdahse
     groups: vboxusers
     append: yes
+
+- name: Add networks.conf
+  copy:
+    src: files/networks.conf
+    dest: /etc/vbox/networks.conf
