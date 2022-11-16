@@ -1,2 +1,22 @@
-- name: Allow NFS
-  shell: firewall-cmd --add-service=nfs
+- name: register firewall services for conditional checks
+  shell: firewall-cmd --list-services
+  register: firewall_services
+
+- name: Allow nfs
+  shell: firewall-cmd --permanent --add-service=nfs
+  when: not firewall_services is search(" nfs ")
+  register: firewall_nfs
+
+- name: Allow mountd
+  shell: firewall-cmd --permanent --add-service=mountd
+  when: not firewall_services is search(" mountd ")
+  register: firewall_mountd
+
+- name: Allow rpc-bind
+  shell: firewall-cmd --permanent --add-service=rpc-bind
+  when: not firewall_services is search(" rpc-bind ")
+  register: firewall_rpc_bind
+
+- name: Reload firewall
+  shell: firewall-cmd --reload
+  when: not firewall_nfs.skipped or not firewall_mountd.skipped or not firewall_rpc_bind.skipped
