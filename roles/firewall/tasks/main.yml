@@ -1,0 +1,2 @@
+- name: Allow NFS
+  shell: firewall-cmd --add-service=nfs

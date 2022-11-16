@@ -11,6 +11,7 @@
      - { role: cisco-anyconnect-vpn-client, tags: ['anyconnect'] }
      - { role: terminator, tags: ['terminator'] }
      - { role: oh-my-zsh, tags: ['omz'] }
+     - { role: firewall, tags: ['firewall'] }
      - { role: virtualbox, tags: ['vbox'] }
      - { role: vagrant, tags: ['vagrant'] }
      - { role: nvm, tags: ['nvm'] }
