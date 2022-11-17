@@ -7,3 +7,4 @@
     - com.jetbrains.PhpStorm                  # IDE
     - org.signal.Signal                       # Messenger
     - com.slack.Slack                         # Chat
+    - md.obsidian.Obsidian                    # Markdown Notes Tool
