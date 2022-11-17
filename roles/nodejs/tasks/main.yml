@@ -1,9 +1,9 @@
-- name: # install fibers system dependencies
+- name: install fibers system dependencies
   dnf:
     name: '@Development tools'
     state: present
 
-- block: # todo pdahse last time this was not installed because the dot files where copied before
+- block:
   - name: Check if nvm is loaded
     lineinfile:
       line: 'export NVM_DIR="$HOME/.nvm"'
@@ -11,14 +11,18 @@
     check_mode: true
     register: nvm_loaded
 
-  - name: Install install nvm
-    shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  - name: Download nvm installer
+    get_url:
+      url: "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh"
+      dest: /tmp/nvm-install.sh
+      mode: 0755
     when: nvm_loaded.changed
 
-  - name: Install yarn
-    npm:
-      name: yarn
-      global: yes
+  - name: Run nvm installer
+    shell: /tmp/nvm-install.sh
+    args:
+      executable: /bin/bash
+
   become_user: pdahse
 
 # todo

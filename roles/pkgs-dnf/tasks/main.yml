@@ -1,19 +1,25 @@
+- name: Update dnf cache
+  dnf:
+    update_cache: yes
+
 - name: Install all packages where only dnf install in needed
   dnf:
     name:
-      - pv                                # pip cli content with progress bar
-      - nmap                              # port scanning
-      - zsh                               # shell
-      - jq                                # format json in cli
-      - xclip                             # copy to clipboard from cli
-      - unzip                             # extract zip archives
-      - ncdu                              # tool to find the biggest files in directory
-      - micro                             # cli text editor
-      - lolcat                            # color output like rainbow
-      - neofetch                          # show system specs
-      - lsd                               # better ls with icons and colors
-      - docker-compose                    # yaml configuration for docker
-      - alacarte                          # tool to create starter and add them to gnome menu
-      - flameshot                         # tool for better screenshots
+      - "{{ item }}"
     state: present
-    update_cache: yes
+  with_items:
+    - util-linux-user                   # needed to run chsh -s $(which zsh)
+    - pv                                # pip cli content with progress bar
+    - nmap                              # port scanning
+    - zsh                               # shell
+    - jq                                # format json in cli
+    - xclip                             # copy to clipboard from cli
+    - unzip                             # extract zip archives
+    - ncdu                              # tool to find the biggest files in directory
+    - micro                             # cli text editor
+    - lolcat                            # color output like rainbow
+    - neofetch                          # show system specs
+    - lsd                               # better ls with icons and colors
+    - docker-compose                    # yaml configuration for docker
+    - alacarte                          # tool to create starter and add them to gnome menu
+    - flameshot                         # tool for better sceenshots

@@ -1,4 +1,4 @@
- - name: "My setup for fedora 37"
+ - name: "My setup for fedora 36"
    hosts: localhost
    connection: localhost
    become: true

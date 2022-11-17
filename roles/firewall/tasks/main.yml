@@ -19,4 +19,7 @@
 
 - name: Reload firewall
   shell: firewall-cmd --reload
-  when: not firewall_nfs.skipped or not firewall_mountd.skipped or not firewall_rpc_bind.skipped
+  when: >
+    firewall_nfs.skipped is not defined or
+    firewall_mountd.skipped is not defined or
+    firewall_rpc_bind.skipped is not defined

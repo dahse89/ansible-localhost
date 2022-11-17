@@ -1,3 +1,6 @@
+- name: Add the flathub flatpak repository remote to the user installation
+  shell: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 - name: Install all packages where only flatpak install in needed
   flatpak:
     name: "{{ item }}"
