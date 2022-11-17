@@ -14,7 +14,7 @@
      - { role: firewall, tags: ['firewall'] }
      - { role: virtualbox, tags: ['vbox'] }
      - { role: vagrant, tags: ['vagrant'] }
-     - { role: nvm, tags: ['nvm'] }
+     - { role: nodejs, tags: ['nodejs'] }
      - { role: git-flow-avh, tags: ['git-flow'] }
      - { role: git-commit-flow, tags: ['git-commit-flow'] }
 #     - { role: insomnia, tags: ['insomnia'] } # todo pdahse not working corrently with ansible / manually works
