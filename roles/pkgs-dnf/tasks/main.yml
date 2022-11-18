@@ -8,6 +8,8 @@
       - "{{ item }}"
     state: present
   with_items:
+    - gcc-c++                           # needed for node-fibers
+    - gnome-extensions-app              # Gnome extension manager
     - util-linux-user                   # needed to run chsh -s $(which zsh)
     - pv                                # pip cli content with progress bar
     - nmap                              # port scanning
