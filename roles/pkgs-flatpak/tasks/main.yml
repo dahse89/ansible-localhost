@@ -11,3 +11,4 @@
     - org.signal.Signal                       # Messenger
     - com.slack.Slack                         # Chat
     - md.obsidian.Obsidian                    # Markdown Notes Tool
+    - rest.insomnia.Insomnia                  # Tool to make and analyse requests

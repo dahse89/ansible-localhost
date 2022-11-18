@@ -17,4 +17,3 @@
      - { role: nodejs, tags: ['nodejs'] }
      - { role: git-flow-avh, tags: ['git-flow'] }
      - { role: git-commit-flow, tags: ['git-commit-flow'] }
-#     - { role: insomnia, tags: ['insomnia'] } # todo pdahse not working corrently with ansible / manually works
