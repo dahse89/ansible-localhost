@@ -1,0 +1,11 @@
+- name: Install touchegg, it's required by gnome gesture extentions
+  dnf:
+    name: touchegg
+    state: present
+    update_cache: true
+
+- name: Make sure touchegg service is running
+  systemd:
+    state: started
+    name: touchegg
+    enabled: yes
