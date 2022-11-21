@@ -26,3 +26,4 @@
     - docker-compose                    # yaml configuration for docker
     - alacarte                          # tool to create starter and add them to gnome menu
     - flameshot                         # tool for better sceenshots
+    - dnf-utils                         # contains the 'needs-restarting -r' command
