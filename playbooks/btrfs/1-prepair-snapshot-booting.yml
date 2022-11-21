@@ -1,0 +1,125 @@
+# @see https://sysguides.com/install-fedora-36-with-snapper-and-grub-btrfs/
+ - name: "Validate btrfs setup installed and prepair btrfs snapshot booting"
+   hosts: localhost
+   connection: localhost
+   become: true
+   tasks:
+     - name: Register checks for btrfs subvolumes
+       shell: btrfs subvolume list /
+       register: btrfs_subvolumes
+
+     # region btrfs subvolume list / example output
+     #  sudo btrfs subvolume list /
+     #  ID 256 gen 3120 top level 5 path home
+     #  ID 257 gen 1601 top level 5 path snapshots
+     #  ID 258 gen 3120 top level 5 path tmp
+     #  ID 259 gen 2869 top level 5 path opt
+     #  ID 260 gen 3120 top level 5 path var
+     #  ID 261 gen 2980 top level 5 path usr-local
+     #  ID 262 gen 2797 top level 260 path var/lib/machines
+     # endregion
+
+     - set_fact:
+         subvolumes: "{{ btrfs_subvolumes.stdout_lines|map('regex_replace', '.+\\s(.+)$', '\\1')|list  }}"
+
+     - debug: var=subvolumes
+
+     - name: Check if {{ item }} subvolume exists
+       fail: msg="Btrfs {{ item }} subvolume is missing"
+       when: "item not in subvolumes"
+       with_items:
+         - home
+         - snapshots
+         - tmp
+         - opt
+         - var
+         - usr-local
+
+     - name: Register checks for btrfs filesystem
+       shell: btrfs filesystem show /
+       register: btrfs_filesystem
+
+     - debug: var=btrfs_filesystem
+
+     - name: Check if btrfs filesystem exists
+       fail: msg="Btrfs filesystem is missing"
+       when: btrfs_filesystem.stdout is not search("Label")
+
+     - name: Register mountpoint checks
+       shell: lsblk -l
+       register: lsblk_checks
+
+     - set_fact:
+         mountpoint_checks: "{{ lsblk_checks.stdout_lines|map('regex_replace', '.+\\s(.+)$', '\\1')|list  }}"
+
+     - name: Check if {{ item }} mountpoint exists
+       fail: msg="{{ item }} mountpoint is missing"
+       when: "item not in mountpoint_checks"
+       with_items:
+         - /
+         - /tmp
+         - /var
+         - /usr/local
+         - /opt
+         - /home
+         - /.snapshots
+
+     - name: Register fstab checks
+       shell: cat /etc/fstab | grep -v '#' | grep -v boot | grep -v '^$'
+       register: fstab_checks
+
+     - name: No clue how to make a check here, so just printing and checking length
+       debug: var=fstab_checks.stdout_lines
+
+     # region fstab example extract
+     # UUID=[..] /           btrfs   defaults,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /.snapshots btrfs   subvol=snapshots,compress=zstd:1,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /home       btrfs   subvol=home,compress=zstd:1,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /opt        btrfs   subvol=opt,compress=zstd:1,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /tmp        btrfs   subvol=tmp,compress=zstd:1,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /usr/local  btrfs   subvol=usr-local,compress=zstd:1,x-systemd.device-timeout=0 0 0",
+     # UUID=[..] /var        btrfs   subvol=var,compress=zstd:1,x-systemd.device-timeout=0 0 0"
+     # endregion
+
+     - name: Check if fstab contain the 7 mount units
+       fail: msg="Number of mount units is not correct"
+       when: "fstab_checks.stdout_lines|count != 7"
+
+     - name: Register Check about copy on write on var subvol
+       shell: lsattr -d /var
+       register: lsattr_var
+
+     - name: Disable copy on write on var subvol
+       shell: chattr -R -f +C /var
+       when: lsattr_var.stdout != '---------------C------ /var'
+       ignore_errors: yes
+
+     - name: Register recheck about copy on write on var subvol because chattr do not return success status code
+       shell: lsattr -d /var
+       register: lsattr_var_2
+
+     - name: Check attr on /var is set now
+       fail: msg="Attribues not correctly set on /var"
+       when: "lsattr_var_2.stdout != '---------------C------ /var'"
+# echo 'SUSE_BTRFS_SNAPSHOT_BOOTING="true"' >> /etc/default/grub
+
+     - name: Register check if snapshot booting is in grub defaults
+       lineinfile:
+         path: /etc/default/grub
+         line: 'SUSE_BTRFS_SNAPSHOT_BOOTING="true"'
+         state: present
+       register: grub_default
+
+     - name: Update Grub config
+       shell: grub2-mkconfig -o /boot/grub2/grub.cfg
+       when: grub_default.changed
+
+     - name: Adjust efi grub config as well
+       lineinfile:
+         path: /boot/efi/EFI/fedora/grub.cfg
+         insertbefore: BOF
+         line: 'set btrfs_relative_path="yes"'
+         state: present
+
+     - debug: msg="Please reboot and continue with playbooks/btrfs/2-install-snapper.yml"
+

@@ -1,0 +1,8 @@
+# @see https://sysguides.com/install-fedora-36-with-snapper-and-grub-btrfs/
+ - name: ""
+   hosts: localhost
+   connection: localhost
+   become: true
+   tasks:
+     - debug: msg="Coming soon.."
+
