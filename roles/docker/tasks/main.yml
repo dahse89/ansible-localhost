@@ -1,0 +1,57 @@
+# @see https://docs.docker.com/engine/install/fedora/
+- name: Uninstall old versions
+  dnf:
+    name:
+      - podman
+      - podman-docker
+      - podman-gvproxy
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-selinux
+      - docker-engine-selinux
+      - docker-engine
+    state: absent
+
+- name: check if docker repository exists
+  stat:
+    path: /etc/yum.repos.d/docker.repo
+  register: docker_repo_file
+
+- name: download docker repository
+  get_url:
+    url: "https://download.docker.com/linux/fedora/docker-ce.repo"
+    dest: /etc/yum.repos.d/docker.repo
+  when: docker_repo_file.stat.exists == False
+
+- name: Install docker
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Enable service docker
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Create "docker" group
+  group:
+    name: docker
+    state: present
+
+# @warning last time docker without sudo was working after reboot
+- name: adding existing user '{{ user }}' to group sudo
+  user:
+    name: '{{ user }}'
+    groups: docker
+    append: yes

@@ -4,6 +4,7 @@
    become: true
    vars:
      font: "Hack Nerd Font Mono Regular" # todo currently installed in oh-my-zsh role -> should be separated
+     user: pdahse
    roles:
 #     - { role: snapper, tags: ['snapper'] }
      - { role: pkgs-dnf, tags: ['dnf'] }
@@ -19,3 +20,4 @@
      - { role: git-flow-avh, tags: ['git-flow'] }
      - { role: git-commit-flow, tags: ['git-commit-flow'] }
      - { role: touchegg, tags: ['touchegg'] }
+     - { role: docker, tags: ['docker'] }
