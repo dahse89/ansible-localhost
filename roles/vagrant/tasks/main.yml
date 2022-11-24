@@ -1,3 +1,14 @@
+- name: check if hashicorp repository exists
+  stat:
+    path: /etc/yum.repos.d/hashicorp.repo
+  register: hashicorp_repo_file
+
+- name: download hashicorp repository
+  get_url:
+    url: "https://rpm.releases.hashicorp.com/fedora/hashicorp.repo"
+    dest: /etc/yum.repos.d/hashicorp.repo
+  when: hashicorp_repo_file.stat.exists == False
+
 - name: Install vagrant
   dnf:
     name: vagrant

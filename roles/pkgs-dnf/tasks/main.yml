@@ -8,6 +8,7 @@
       - "{{ item }}"
     state: present
   with_items:
+    - dnf-plugins-core
     - gcc-c++                           # needed for node-fibers
     - gnome-extensions-app              # Gnome extension manager
     - gnome-tweak-tool                  # For themeing gnome

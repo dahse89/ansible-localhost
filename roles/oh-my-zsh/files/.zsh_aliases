@@ -86,6 +86,7 @@ v-ansible-playbook() {
 
 socket-please() {
   (cd /home/pdahse/dev/beauty-environment/projects/beauty-octopus-websocket && build)
+  (cd /home/pdahse/dev/beauty-environment/projects/beauty-octopus && vagrant ssh -c "cd /var/www/oct.beauty.dev/socket_nodes/ && sudo pm2 start server.js")
 }
 
 # lsd
