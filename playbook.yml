@@ -21,3 +21,4 @@
      - { role: git-commit-flow, tags: ['git-commit-flow'] }
      - { role: touchegg, tags: ['touchegg'] }
      - { role: docker, tags: ['docker'] }
+     - { role: pdfsam, tags: ['pdfsam'] }

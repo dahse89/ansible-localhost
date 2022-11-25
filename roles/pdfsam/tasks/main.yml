@@ -1,0 +1,26 @@
+- name: Register check if pdfsam already exists
+  stat:
+    path: "/opt/{{ pdfsam_name }}/bin/pdfsam.sh"
+  register: pdfsam
+
+- name: Download pdfsam
+  get_url:
+    url: "{{ pdfsam_src }}"
+    dest: /tmp
+  when: not pdfsam.stat.exists
+
+- name: Unarchive pdfsam
+  unarchive:
+    src: "/tmp/{{ pdfsam_name }}.tar.gz"
+    dest: /opt
+  when: not pdfsam.stat.exists
+
+- name: Add pdfsam icon
+  copy:
+    src: files/pdfsam.png
+    dest: "/usr/share/icons/pdfsam.png"
+
+- name: Add pdfsam desktop link
+  template:
+    src: templates/pdfsam.desktop
+    dest: "/usr/share/applications/pdfsam.desktop"

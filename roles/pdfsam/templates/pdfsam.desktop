@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=PdfSam
+Exec=/opt/{{ pdfsam_name }}/bin/pdfsam.sh
+Comment=
+Terminal=false
+Icon=/usr/share/icons/pdfsam.png
+Type=Application
