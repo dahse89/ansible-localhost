@@ -14,7 +14,7 @@
      - { role: terminator, tags: ['terminator'] }
      - { role: oh-my-zsh, tags: ['omz'] }
      - { role: firewall, tags: ['firewall'] }
-     - { role: virtualbox, tags: ['vbox'] }
+#     - { role: virtualbox, tags: ['vbox'] } # problems with latest version (7.0.4) installed 6.1 manually
      - { role: vagrant, tags: ['vagrant'] }
      - { role: nodejs, tags: ['nodejs'] }
      - { role: git-flow-avh, tags: ['git-flow'] }

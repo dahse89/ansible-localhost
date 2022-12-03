@@ -22,6 +22,7 @@
     shell: /tmp/nvm-install.sh
     args:
       executable: /bin/bash
+    when: nvm_loaded.changed
 
   become_user: pdahse
 
