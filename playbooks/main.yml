@@ -1,23 +1,26 @@
- - name: "My setup for fedora 36"
+ - name: "My setup for Fedora"
    hosts: localhost
    connection: localhost
    become: true
+
    vars:
-     font: "Hack Nerd Font Mono Regular" # todo currently installed in oh-my-zsh role -> should be separated
+     font: "Hack Nerd Font Mono Regular"
      user: pdahse
+
    roles:
-     - { role: pkgs-dnf, tags: ['dnf'] }
-     - { role: pkgs-flatpak, tags: ['flatpak'] }
-     - { role: pkgs-pip, tags: ['pip'] }
-     - { role: cisco-anyconnect-vpn-client, tags: ['anyconnect'] }
-     - { role: terminator, tags: ['terminator'] }
-     - { role: oh-my-zsh, tags: ['omz'] }
-     - { role: firewall, tags: ['firewall'] }
-#     - { role: virtualbox, tags: ['vbox'] } # problems with latest version (7.0.4) installed 6.1 manually
-     - { role: vagrant, tags: ['vagrant'] }
-     - { role: nodejs, tags: ['nodejs'] }
-     - { role: git-flow-avh, tags: ['git-flow'] }
-     - { role: git-commit-flow, tags: ['git-commit-flow'] }
-     - { role: touchegg, tags: ['touchegg'] }
-     - { role: docker, tags: ['docker'] }
-     - { role: pdfsam, tags: ['pdfsam'] }
+     - { role: ../roles/pkgs-dnf, tags: ['dnf'] }
+     - { role: ../roles/pkgs-flatpak, tags: ['flatpak'] }
+     - { role: ../roles/pkgs-pip, tags: ['pip'] }
+     - { role: ../roles/fonts, tags: ['fonts'] }
+     - { role: ../roles/cisco-anyconnect-vpn-client, tags: ['anyconnect'] }
+     - { role: ../roles/terminator, tags: ['terminator'] }
+     - { role: ../roles/oh-my-zsh, tags: ['omz'] }
+     - { role: ../roles/firewall, tags: ['firewall'] }
+#     - { role: ../roles/virtualbox, tags: ['vbox'] } # problems with latest version (7.0.4) installed 6.1 manually
+     - { role: ../roles/vagrant, tags: ['vagrant'] }
+     - { role: ../roles/nodejs, tags: ['nodejs'] }
+     - { role: ../roles/git-flow-avh, tags: ['git-flow'] }
+     - { role: ../roles/git-commit-flow, tags: ['git-commit-flow'] }
+     - { role: ../roles/touchegg, tags: ['touchegg'] }
+     - { role: ../roles/docker, tags: ['docker'] }
+     - { role: ../roles/pdfsam, tags: ['pdfsam'] }

@@ -1,0 +1,18 @@
+- block:
+    - name: Ensure fonts directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.fonts"
+        state: directory
+
+    - name: Copy all fonts
+      copy:
+        src: '{{ item }}'
+        dest: "{{ lookup('env', 'HOME') }}/.fonts"
+      with_fileglob: "files/*.ttf"
+      register: fonts
+
+    - name: Rebuild fonts cache
+      shell: fc-cache -f -v
+      when: fonts.changed
+
+  become_user: pdahse

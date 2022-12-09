@@ -1,20 +1,4 @@
 - block:
-    - name: Ensure fonts directory
-      file:
-        path: "{{ lookup('env', 'HOME') }}/.fonts"
-        state: directory
-
-    - name: Copy all fonts
-      copy:
-        src: '{{ item }}'
-        dest: "{{ lookup('env', 'HOME') }}/.fonts"
-      with_fileglob: "files/*.ttf"
-      register: fonts
-
-    - name: Rebuild fonts cache
-      shell: fc-cache -f -v
-      when: fonts.changed
-
     - name: Register var on oh-my-zsh path
       stat:
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
