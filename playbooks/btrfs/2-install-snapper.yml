@@ -4,5 +4,184 @@
    connection: localhost
    become: true
    tasks:
-     - debug: msg="Coming soon.."
+     - name: Check if snapper is available
+       block:
+         - name: try using snapper
+           shell: snapper ls
 
+         - name: snapper available
+           debug:
+             msg: snapper is installed. Skip that block because it should be only happens once
+
+       rescue:
+         - name: No snapper
+           debug:
+             msg: snapper is not installed
+
+         - name: Install snapper
+           dnf:
+             name:
+               - snapper
+               - python3-dnf-plugin-snapper
+             update_cache: yes
+
+         - name: umount /.snapshots
+           mount:
+             path: /.snapshots
+             state: unmounted
+
+         - name: remove /.snapshots
+           file:
+             path: /.snapshots
+             state: absent
+
+         - name: Create a new snapper configuration named root for the Btrfs volume at /
+           shell: snapper -c root create-config /
+
+         - name: Remove the newly created subvolume .snapshots because we only want the snapper config
+           shell: btrfs subvolume delete /.snapshots
+
+         - name: recreate /.snapshots
+           file:
+             path: /.snapshots
+             state: directory
+
+         - name: systemctl daemon-reload
+           shell: systemctl daemon-reload
+
+         - name: mount -a
+           shell: mount -a
+
+         - name: snapper -c root set-config ALLOW_USERS=pdahse SYNC_ACL=yes
+           shell: snapper -c root set-config ALLOW_USERS=pdahse SYNC_ACL=yes
+
+         - name: chown -R :pdahse /.snapshots
+           shell: chown -R :pdahse /.snapshots
+
+         - name: grub2-editenv - unset menu_auto_hide
+           shell: grub2-editenv - unset menu_auto_hide
+
+     - name: Check if grub-btrfs directory exists
+       stat:
+         path: /opt/grub-btrfs
+       register: grub_btrfs_directory
+
+     - name: Example clone of a single branch
+       git:
+         repo: https://github.com/Antynea/grub-btrfs.git
+         dest: /opt/grub-btrfs
+         single_branch: yes
+         version: master
+       when: not grub_btrfs_directory.stat.exists
+
+     - name: Compile grub btrfs
+       make:
+         chdir: /opt/grub-btrfs
+         target: install
+       when: not grub_btrfs_directory.stat.exists
+
+#       $ sudo vim /etc/default/grub-btrfs/config
+#       ...
+#       GRUB_BTRFS_SHOW_TOTAL_SNAPSHOTS_FOUND="true"
+#       GRUB_BTRFS_GRUB_DIRNAME="/boot/grub2"
+#       GRUB_BTRFS_MKCONFIG=/usr/sbin/grub2-mkconfig
+#       GRUB_BTRFS_SCRIPT_CHECK=grub2-script-check
+
+     - name: check if GRUB_BTRFS_SHOW_TOTAL_SNAPSHOTS_FOUND is configured
+       lineinfile:
+         backup: true
+         path: /etc/default/grub-btrfs/config
+         regexp: '^GRUB_BTRFS_SHOW_TOTAL_SNAPSHOTS_FOUND'
+         state: absent
+       check_mode: true
+       register: grub_btrfs_show_total_snapshots_found_check
+       changed_when: false
+
+     - name: insert GRUB_BTRFS_SHOW_TOTAL_SNAPSHOTS_FOUND if missing
+       lineinfile:
+         path: /etc/default/grub-btrfs/config
+         insertafter: EOF
+         line: 'GRUB_BTRFS_SHOW_TOTAL_SNAPSHOTS_FOUND="true"'
+       when: grub_btrfs_show_total_snapshots_found_check.found == 0
+
+     - name: check if GRUB_BTRFS_GRUB_DIRNAME is configured
+       lineinfile:
+         backup: true
+         path: /etc/default/grub-btrfs/config
+         regexp: '^GRUB_BTRFS_GRUB_DIRNAME'
+         state: absent
+       check_mode: true
+       register: grub_btrfs_grub_dirname_check
+       changed_when: false
+
+     - name: insert GRUB_BTRFS_GRUB_DIRNAME if missing
+       lineinfile:
+         path: /etc/default/grub-btrfs/config
+         insertafter: EOF
+         line: 'GRUB_BTRFS_GRUB_DIRNAME="/boot/grub2"'
+       when: grub_btrfs_grub_dirname_check.found == 0
+
+     - name: check if GRUB_BTRFS_GBTRFS_DIRNAME is configured
+       lineinfile:
+         backup: true
+         path: /etc/default/grub-btrfs/config
+         regexp: '^GRUB_BTRFS_GBTRFS_DIRNAME'
+         state: absent
+       check_mode: true
+       register: grub_btrfs_gbtrfs_dirname_check
+       changed_when: false
+
+     - name: insert GRUB_BTRFS_GBTRFS_DIRNAME if missing
+       lineinfile:
+         path: /etc/default/grub-btrfs/config
+         insertafter: EOF
+         line: 'GRUB_BTRFS_GBTRFS_DIRNAME="/boot/grub2"'
+       when: grub_btrfs_gbtrfs_dirname_check.found == 0
+
+     - name: check if GRUB_BTRFS_MKCONFIG is configured
+       lineinfile:
+         backup: true
+         path: /etc/default/grub-btrfs/config
+         regexp: '^GRUB_BTRFS_MKCONFIG'
+         state: absent
+       check_mode: true
+       register: grub_btrfs_mkconfig_check
+       changed_when: false
+
+     - name: insert GRUB_BTRFS_MKCONFIG if missing
+       lineinfile:
+         path: /etc/default/grub-btrfs/config
+         insertafter: EOF
+         line: 'GRUB_BTRFS_MKCONFIG=/usr/sbin/grub2-mkconfig'
+       when: grub_btrfs_mkconfig_check.found == 0
+
+     - name: check if GRUB_BTRFS_SCRIPT_CHECK is configured
+       lineinfile:
+         backup: true
+         path: /etc/default/grub-btrfs/config
+         regexp: '^GRUB_BTRFS_SCRIPT_CHECK'
+         state: absent
+       check_mode: true
+       register: grub_btrfs_script_check_check
+       changed_when: false
+
+     - name: insert GRUB_BTRFS_SCRIPT_CHECK if missing
+       lineinfile:
+         path: /etc/default/grub-btrfs/config
+         insertafter: EOF
+         line: 'GRUB_BTRFS_SCRIPT_CHECK=grub2-script-check'
+       when: grub_btrfs_script_check_check.found == 0
+
+     - name: update grub config
+       shell: grub2-mkconfig -o /boot/grub2/grub.cfg
+       when: >
+        grub_btrfs_show_total_snapshots_found_check.found == 0 or
+        grub_btrfs_grub_dirname_check.found == 0 or
+        grub_btrfs_mkconfig_check.found == 0 or
+        grub_btrfs_script_check_check.found == 0 or
+        grub_btrfs_gbtrfs_dirname_check.found == 0
+
+     - name: Enable grub-btrfsd
+       systemd:
+         name: grub-btrfsd
+         enabled: yes

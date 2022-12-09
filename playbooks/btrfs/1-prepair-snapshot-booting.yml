@@ -101,7 +101,6 @@
      - name: Check attr on /var is set now
        fail: msg="Attribues not correctly set on /var"
        when: "lsattr_var_2.stdout != '---------------C------ /var'"
-# echo 'SUSE_BTRFS_SNAPSHOT_BOOTING="true"' >> /etc/default/grub
 
      - name: Register check if snapshot booting is in grub defaults
        lineinfile:
