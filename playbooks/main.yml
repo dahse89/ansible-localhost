@@ -6,7 +6,6 @@
      font: "Hack Nerd Font Mono Regular" # todo currently installed in oh-my-zsh role -> should be separated
      user: pdahse
    roles:
-#     - { role: snapper, tags: ['snapper'] }
      - { role: pkgs-dnf, tags: ['dnf'] }
      - { role: pkgs-flatpak, tags: ['flatpak'] }
      - { role: pkgs-pip, tags: ['pip'] }
