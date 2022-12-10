@@ -24,3 +24,4 @@
      - { role: ../roles/touchegg, tags: ['touchegg'] }
      - { role: ../roles/docker, tags: ['docker'] }
      - { role: ../roles/pdfsam, tags: ['pdfsam'] }
+     - { role: ../roles/hetzner-cloud, tags: ['hcloud'] }

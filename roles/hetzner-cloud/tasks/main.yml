@@ -1,0 +1,16 @@
+- name: Check if hcloud is already installed
+  shell: /home/pdahse/.local/bin/hcloud version
+  register: hcloud
+  ignore_errors: yes
+
+- name: Install hetzner cloud cli (hcloud)
+  shell: go install github.com/hetznercloud/cli/cmd/hcloud@latest
+  become_user: pdahse
+  when: hcloud.failed
+
+- name: Link bin are to PATH
+  file:
+    src: "/home/pdahse/go/bin/hcloud"
+    dest: /home/pdahse/.local/bin/hcloud
+    state: link
+  when: hcloud.failed
