@@ -26,5 +26,6 @@
       - flameshot                         # tool for better sceenshots
       - dnf-utils                         # contains the 'needs-restarting -r' command
       - go                                # go lang
+      - gimp                              # image editor
 
     state: present
