@@ -5,7 +5,8 @@
 - name: Install all packages where only dnf install in needed
   dnf:
     name:
-      - dnf-plugins-core
+      - dconf-editor                      # edit e.g. gsettings
+      - dnf-plugins-core                  # required for some installations
       - gcc-c++                           # needed for node-fibers
       - gnome-extensions-app              # Gnome extension manager
       - gnome-tweak-tool                  # For themeing gnome
